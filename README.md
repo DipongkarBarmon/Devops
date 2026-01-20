@@ -32,6 +32,10 @@ docker ps
 
 Docker run
 
+ docker run  --name <container_name> <image_name> //cann't use terminal
+
+docker run -d --name <container_name> <image_name> //for use terminal
+
 Create & run a new container
 docker run <image_name>
 
@@ -45,7 +49,15 @@ docker run - -name <container_name> <image_name>
 
 
 Port Binding in container
-docker run -p<host_port>:<container_port> <image_name>
+docker run -p 8001:3000 -d --name  <container_image> <image_name>  // run docker  to mapping two service
+
+docker run -v <path_to_folder_on_location>:<path_to_folder_on_container> -p 8001:3000 -d --name  <container_image> <image_name>
+
+docker run -v <path_to_folder_on_location>:/app -p 8001:3000 -d --name  <container_image> <image_name>
+
+expamle : docker run -v $(pwd):/app -p 8001:3000 -d --name node-app node-app-image 
+
+docker run -p<host_port>:<container_port> <image_name> 
 
 Set environment variables in a container
 docker run -e <var_name>=<var_value> <container_name> (or <container_id)
@@ -59,10 +71,15 @@ docker inspect <container_name> (or <container_id)
 Delete a container
 docker rm <container_name> (or <container_id)
 
+docker rm <container_name> -f //best option to romove container
+example:docker rm node-app -f
+
 
 TROUBLESHOOT :
 Fetch logs of a container
 docker logs <container_name> (or <container_id)
+
+example : docker logs node-app
 
 Open shell inside running container
 docker exec -it <container_name> /bin/bash
@@ -128,3 +145,22 @@ docker network rm <network_name>
 
 Remove all unused networks
 docker network prune
+
+
+
+
+
+// bash
+docker exec -it node-app bash
+
+cat index.js //show the code
+
+
+ docker run -v $(pwd):/app -v /app/node_modules -p 8001:3000  -d --name node-app node-app-image   
+
+ //can't create file only for read only
+ docker run -v $(pwd):/app:ro -v /app/node_modules -p 8001:3000  -d --name node-app node-app-image 
+
+//with out env 
+ docker run -v $(pwd):/app:ro -v /app/node_modules --env PORT=4000  -p 8001:4000  -d --name node-app 
+node-app-image 
