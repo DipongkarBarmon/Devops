@@ -114,6 +114,7 @@ docker volume create <volume_name>
 Delete a Named volume
 docker volume rm <volume_name>
 
+
 Mount Named volume with running container
 docker run - -volume <volume_name>:<mount_path>
 
@@ -153,7 +154,10 @@ docker network prune
 // bash
 docker exec -it node-app bash
 
+bash commend
 cat index.js //show the code
+printenv //to show env 
+
 
 
  docker run -v $(pwd):/app -v /app/node_modules -p 8001:3000  -d --name node-app node-app-image   
@@ -163,4 +167,56 @@ cat index.js //show the code
 
 //with out env 
  docker run -v $(pwd):/app:ro -v /app/node_modules --env PORT=4000  -p 8001:4000  -d --name node-app 
-node-app-image 
+node-app-image
+
+//with env file
+docker run -v $(pwd):/app -v /app/node_modules --env-file ./.env -p 8001:4000 -d --name node-app node-app-image
+
+
+
+Volume:
+//list of all volume
+docker volume ls
+
+//delete unnesseccery volume except running container
+docker volume prune
+
+//delete volume when delete container
+docker rm node-app -fv
+
+
+//docker run -v $(pwd):/app -v /app/node_modules --env-file ./.env -p 8001:3000 -d --name n
+//this commmend to much long . we have lot of commend like this so to run these all commnt vary painfull. we can't keep it in our mind
+// so we use docker compose
+
+now create docker-compose.yml file
+
+docker compose version
+
+docker build -t node-app-image .
+
+// to run services 
+docker compose up -d
+
+//to remvoe Container and Network
+docker compose down -v
+
+//if we change fundamentally in docker file ,neet to rebulid docker using docker build -t node-app-image .
+//or docker compose up -d --build (always we use this)
+
+
+then i create 
+docker-compose.backup.yml
+docker-compose.dev.yml for development environment
+docker-compose.prod.yml for production environmnet
+
+//run dev
+docker compose -f docker-compose.yml -f docker-compose.dev.yml up -d --build
+//delete dev
+docker compose -f docker-compose.yml -f docker-compose.dev.yml down -v
+
+//run prod
+docker compose -f docker-compose.yml -f docker-compose.prod.yml up -d --build
+
+//delete 
+docker compose -f docker-compose.yml -f docker-compose.prod.yml down -v

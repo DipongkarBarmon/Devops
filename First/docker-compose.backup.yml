@@ -1,0 +1,14 @@
+#version: '3.8' #docker compose veriosn
+
+services: # there are multiple servise # need to press one tab in every level
+ node-app: # services name
+  build: .
+  ports: #can here multiple ports
+   - "8001:3000"
+  volumes:
+   - ./:/app
+   - /app/node_modules
+  environment:
+   - PORT=3000
+  # env_file: #environment and env_file are same
+  #  - ./.env
