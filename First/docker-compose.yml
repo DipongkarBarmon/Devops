@@ -8,3 +8,16 @@ services: # there are multiple servise # need to press one tab in every level
    - /app/node_modules
   environment:
    - PORT=3000
+  depends_on:
+   - mongo
+ mongo:
+  image: mongo
+
+  environment:
+   MONGO_INITDB_ROOT_USERNAME: root
+   MONGO_INITDB_ROOT_PASSWORD: dip
+  
+  volumes:
+   - mongo-db:/data/db
+volumes:
+ mongo-db:
