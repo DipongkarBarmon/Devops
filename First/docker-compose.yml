@@ -1,23 +1,41 @@
-services: # there are multiple servise # need to press one tab in every level
- node-app: # services name
-  build: .
-  ports: #can here multiple ports
-   - "8001:3000"
-  volumes:
-   - ./:/app
-   - /app/node_modules
-  environment:
-   - PORT=3000
-  depends_on:
-   - mongo
- mongo:
-  image: mongo
+services:
+  # there are multiple servise # need to press one tab in every level
 
-  environment:
-   MONGO_INITDB_ROOT_USERNAME: root
-   MONGO_INITDB_ROOT_PASSWORD: dip
-  
-  volumes:
-   - mongo-db:/data/db
+  nginx:
+    image: nginx:stable-alpine
+    ports:
+      - "8000:80"
+    depends_on:
+      - node-app
+    volumes:
+      - ./nginx/default.conf:/etc/nginx/conf.d/default.conf:ro
+  node-app:
+    # services name
+    build: .
+    # ports: #can here multiple ports //not need for nginx
+    #  - "8001:3000"
+    volumes:
+      - ./:/app
+      - /app/node_modules
+    environment:
+      - PORT=3000
+    depends_on:
+      - mongo
+      - redis
+  mongo:
+    image: mongo
+
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: dip
+
+    volumes:
+      - mongo-db:/data/db
+
+  redis:
+    image: redis:7
+    ports:
+      - "6379:6379"
+
 volumes:
- mongo-db:
+  mongo-db:

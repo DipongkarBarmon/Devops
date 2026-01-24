@@ -18,7 +18,7 @@ const getAllpost =async(req,res)=>{
 }
 
 const getOnePost= async(req,res)=>{
-    const id=req.param.id;
+    const {id}=req.params;
     try {
        const onePost =await Post.findById(id)
        res.status(200).json({
@@ -27,7 +27,7 @@ const getOnePost= async(req,res)=>{
            onePost
          }
        })
-    } catch (error) { 
+    } catch (error) {
         console.log(error)
         res.status(400).json({
           status:"fail"
@@ -56,9 +56,9 @@ const createPost= async(req,res)=>{
 
 
 const updatePost= async(req,res)=>{
-   
+    const {id}=req.params;
     try {
-       const post =await Post.findByIdAndUpdate(req.param.id,req.body,{
+       const post =await Post.findByIdAndUpdate(id,req.body,{
          new:true,
          runValidators:true
        })
@@ -77,9 +77,9 @@ const updatePost= async(req,res)=>{
 }
 
 const deletePost= async(req,res)=>{
-   
+    const {id} =req.params;
     try {
-       const post =await Post.findByIdAndDelete(req.param.id)
+       const post =await Post.findByIdAndDelete(id)
        res.status(200).json({
          status:"Success",
          data:{

@@ -22,4 +22,4 @@ EXPOSE $PORT
 
 # CMD ["npm", "run","dev"]
 
-CMD [ "node","index.js" ]
+CMD [ "node", "index.js" ]
