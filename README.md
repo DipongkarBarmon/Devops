@@ -15,6 +15,8 @@ docker images
 Remove unused images
 docker image prune  
 
+
+
 Build an image from a Dockerfile
 docker build -t <image_name>:<version> . //version is optional
 
@@ -220,3 +222,83 @@ docker compose -f docker-compose.yml -f docker-compose.prod.yml up -d --build
 
 //delete 
 docker compose -f docker-compose.yml -f docker-compose.prod.yml down -v
+
+
+now add mongodb servece 
+
+docker exec -it first-mongo-1 mongosh -u root -p dip
+
+docker compose -f docker-compose.yml -f docker-compose.dev.yml down
+
+npm i mongose
+
+docker compose -f docker-compose.yml -f docker-compose.dev.yml up -d --build
+
+//https://mongoosejs.com/docs/connections.html
+
+docker inspect first-mongo-1 //more detail information about the container
+
+docker logs 624c42eec3e6 -f// show project is run or not
+
+
+three commend in one line
+
+docker compose -f docker-compose.yml -f docker-compose.dev.yml down && \
+docker compose -f docker-compose.yml -f docker-compose.dev.yml up -d --build && \
+docker logs -f first-node-app-1
+
+docker network ls //to show network
+
+docker exec -it first-node-app-1 bash 
+here 
+
+for use ping mongo
+
+apt update
+apt install -y iputils-ping
+ping mongo  //to check if the Node container can reach the Mongo container over the network
+
+
+//to inspect more network details
+docker network inspect first_default
+
+//to interrupt mongoDB
+ docker compose -f docker-compose.yml -f docker-compose.dev.yml up -d --no-deps node-app
+
+
+// to hash the password
+npm i bcrypt
+
+
+//in docker-compose.yml
+add redis service
+
+npm install express express-session connect-redis redis
+
+to show in memory store
+docker exec -it first-redis-1 redis-cli
+
+
+
+
+// Load balance
+
+set up Nginx
+
+create folder nginx
+nginx
+ default.config 
+  =read all code
+
+then setup nginx in docker comppose.yml and prod,dev.yml
+
+then run 
+ docker compose -f docker-compose.yml -f docker-compose.dev.yml down
+ then  docker compose -f docker-compose.yml -f docker-compose.dev.yml up -d --scale node-app=2( this can any thing)
+
+docker ps
+docker logs first-node-app-1 -f
+docker logs first-node-app-2 -f
+
+then install cors
+ cors is used to control which websites are allowed to call your backend API from a browser. It solves a browser-only security restriction called CORS (Cross-Origin Resource Sharing).
