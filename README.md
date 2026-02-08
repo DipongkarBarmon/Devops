@@ -189,6 +189,8 @@ docker rm node-app -fv
 
 //docker run -v $(pwd):/app -v /app/node_modules --env-file ./.env -p 8001:3000 -d --name n
 //this commmend to much long . we have lot of commend like this so to run these all commnt vary painfull. we can't keep it in our mind
+
+
 // so we use docker compose
 
 now create docker-compose.yml file
@@ -224,7 +226,7 @@ docker compose -f docker-compose.yml -f docker-compose.prod.yml up -d --build
 docker compose -f docker-compose.yml -f docker-compose.prod.yml down -v
 
 
-now add mongodb servece 
+# now add mongodb servece 
 
 docker exec -it first-mongo-1 mongosh -u root -p dip
 
@@ -281,9 +283,9 @@ docker exec -it first-redis-1 redis-cli
 
 
 
-// Load balance
+# Load balance
 
-set up Nginx
+## set up Nginx
 
 create folder nginx
 nginx
