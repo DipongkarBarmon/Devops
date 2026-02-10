@@ -26,8 +26,8 @@ services:
     image: mongo
 
     environment:
-     - MONGO_INITDB_ROOT_USERNAME: root
-     - MONGO_INITDB_ROOT_PASSWORD: dip
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: dip
 
     volumes:
       - mongo-db:/data/db
